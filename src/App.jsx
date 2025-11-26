@@ -13,6 +13,8 @@ import Labs from '../components/Labs';
 import Profile from '../components/Profile';
 import PNF from '../Common/pnf';
 import ExploreMore from '../Common/EXplore';
+import AdminDashboard from './admin/AdminDashboard';
+import ManageDoctors from './admin/ManageDoctors';
 
 function App() {
   return (
@@ -30,8 +32,12 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/labs" element={<Labs />} />
         <Route path="/profile" element={<Profile />} />
-                <Route path="**" element={<PNF />} />
-                                <Route path="explore" element={<ExploreMore />} />
+        <Route path="**" element={<PNF />} />
+        <Route path="explore" element={<ExploreMore />} />
+        <Route path="admindashboard" element={<AdminDashboard />} />
+        <Route path="managedoctors" element={< ManageDoctors/>} />
+        <Route path="explore" element={<ExploreMore />} />
+
 
 
 
