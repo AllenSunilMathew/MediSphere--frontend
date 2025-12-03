@@ -22,20 +22,29 @@ export default function Auth() {
     }
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await api.post("/login", { email: form.email, password: form.password });
-      const { token, user } = res.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-      alert("Login successful");
+ const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await api.post("/login", { email: form.email, password: form.password });
+    const { token, user } = res.data;
+    
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    alert("Login successful");
+
+    // 🔹 If admin → go to admin dashboard
+    if (user?.role === "admin") {
+      navigate("/admindashboard");
+    } else {
       navigate("/");
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.message || "Login failed");
     }
-  };
+
+  } catch (err) {
+    console.error(err);
+    alert(err.response?.data?.message || "Login failed");
+  }
+};
 
   return (
     <div

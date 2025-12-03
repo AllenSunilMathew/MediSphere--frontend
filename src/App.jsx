@@ -8,7 +8,7 @@ import Auth from '../components/Auth';
 import Appointment from '../components/Appoinment';
 import AppointmentRecords from '../components/AppoinmentRecords';
 import Register from '../components/Register';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Labs from '../components/Labs';
 import Profile from '../components/Profile';
 import PNF from '../Common/pnf';
@@ -17,6 +17,9 @@ import AdminDashboard from './admin/AdminDashboard';
 import ManageDoctors from './admin/ManageDoctors';
 
 function App() {
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isAdmin = user?.role === "admins";
   return (
     <>
       <Header />
@@ -34,13 +37,22 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="**" element={<PNF />} />
         <Route path="explore" element={<ExploreMore />} />
-        <Route path="admindashboard" element={<AdminDashboard />} />
-        <Route path="managedoctors" element={< ManageDoctors/>} />
-        <Route path="explore" element={<ExploreMore />} />
 
-
-
-
+        {/* 🔐 Admin Only Routes */}
+      <Route
+  path="admindashboard"
+  element={
+    isAdmin ? <AdminDashboard /> : <Home />
+  }
+/>
+<Route
+  path="admindashboard"
+  element={isAdmin ? <AdminDashboard /> : <PNF />}
+/>
+        <Route
+          path="managedoctors"
+          element={isAdmin ? <ManageDoctors /> : <Home />}
+        />
 
       </Routes>
     </>
